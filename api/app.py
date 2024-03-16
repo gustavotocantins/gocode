@@ -14,8 +14,12 @@ def index():
     return render_template('index.html')
 
 @app.route('/BetoLanches')
-def consultar():
-    return render_template('index.html')
+def BetoLanches():
+    return render_template('betolanches.html')
+
+@app.route('/BetoLinks')
+def BetoLinks():
+    return render_template('betolinks.html')
 
 if __name__ == '__main__':
     app.run()

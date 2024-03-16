@@ -1,0 +1,80 @@
+<html lang="pt-BR"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beto Lanches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        #logo {
+            margin-top: 20px;
+            width: 150px;
+        }
+        #marca {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        #descricao {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #666;
+            max-width: 80%; /* Largura máxima da descrição */
+            margin: 0 auto; /* Centralizar a descrição */
+            text-align: center; /* Alinhar o texto no centro */
+        }
+        #links {
+            margin-top: 20px;
+        }
+        .link-div {
+            width: 250px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #FF7300;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .link-div img {
+            width: 30px; /* Tamanho da imagem */
+            margin-right: 10px; /* Espaçamento entre a imagem e o texto */
+        }
+        .link-div:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="..\static\betolanches\logomarca.jpg" alt="Logo da Marca">
+        <h1 id="marca">Beto Lanches</h1>
+        <p id="descricao">Bem-vindo ao melhor Delivery de Castanhal! Faça seu pedido online e aproveite nossas promoções.</p>
+    </header>
+    <section id="links">
+        <div class="link-div" onclick="window.location.href='https://www.gocode.uno/BetoLanches'">
+            <img src="..\static\betolanches\cardapio.png" alt="Imagem 1">
+            <span>Faça seu Pedido!</span>
+        </div>
+        <div class="link-div" onclick="window.location.href='https://wa.me/559182658882/'">
+            <img src="..\static\betolanches\whatsapp.png" alt="Imagem 2">
+            <span>WhatsApp</span>
+        </div>
+        
+        <div class="link-div" onclick="window.location.href='https://www.instagram.com/p/Ct7zNAAOn5n/'">
+            <img src="..\static\betolanches\instagram.png" alt="Imagem 3">
+            <span>Instagram</span>
+        </div><div class="link-div" onclick="window.location.href='link_para_pagina_3.html'">
+            <img src="..\static\betolanches\facebook.png" alt="Imagem 3">
+            <span>Facebook</span>
+        </div>
+
+        <a>Desenvolvido por: GoCode</a>
+        <!-- Adicione mais divs conforme necessário -->
+    </section>
+
+
+</body></html>
