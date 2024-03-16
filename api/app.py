@@ -13,15 +13,9 @@ app.static_folder = 'static'
 def index():
     return render_template('index.html')
 
-@app.route('/consultar')
+@app.route('/BetoLanches')
 def consultar():
-    return render_template('consultar.html')
-
-@app.route('/cadastrar/<cotas>/')
-def cadastrar(cotas):
-    cotas = cotas
-    valor = float(cotas)*0.5
-    return render_template('cadastrar.html',cotas=cotas,valorreais=valor)
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
