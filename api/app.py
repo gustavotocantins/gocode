@@ -22,8 +22,8 @@ def BetoLinks():
     return render_template('betolinks.html')
 
 @app.route('/natanjunior')
-def BetoLinks():
-    return render_template('natanjunior.html')
+def natanjunior():
+    return render_template('natanjunior/natanjunior.html')
 
 if __name__ == '__main__':
     app.run()
