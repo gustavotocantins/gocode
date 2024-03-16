@@ -26,7 +26,7 @@ def natanjunior():
     return render_template('natanjunior.html')
 
 @app.route('/NJlinks')
-def natanjunior():
+def natanlink():
     return render_template('natanlink.html')
 
 if __name__ == '__main__':
