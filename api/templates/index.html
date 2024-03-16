@@ -149,7 +149,10 @@ p,
 window.onload = limparSessionStorage;
     
 function abrirFormulario() {
-            document.getElementById("formulario-overlay").style.display = "flex";
+            if(valortotal()=='0'){
+                alert("Escolha os lanches que você deseja pressionando '+'")
+        }else{
+            document.getElementById("formulario-overlay").style.display = "flex";}
         }
 
         function fecharFormulario() {
@@ -270,7 +273,7 @@ function valortotal() {
 </head>
 <body>
     <header style="background-color:#FF7300">
-        <img src="../static/betolanches2.png" alt="Foto do Prêmio" id="logo">
+        <img src="../static/betolanches/betolanches2.png" alt="Foto do Prêmio" id="logo">
     <div id="menu">
         
     </div>
@@ -279,21 +282,21 @@ function valortotal() {
     <div id="formulario-overlay" style="display: none;">
         <div id="formulario">
             <h2>Falta pouco para comer seu lanche! Informe:</h2>
-            <input type="text" id="nome" placeholder="Nome">
+            <input type="text" id="nome" placeholder="Nome" style="fonte-size: 44px;">
             <input type="text" id="endereco" placeholder="Endereço">
-            <button onclick="comprar()">Enviar Pedido</button>
+            <button onclick="comprar()" id="finalizarcompra">Enviar Pedido</button>
             <div id="formulario-footer">
-                <button onclick="fecharFormulario()">voltar</button>
+                <button onclick="fecharFormulario()" id="finalizarcompra">voltar</button>
             </div>
         </div>
-    </div><div>aa</div>
-<div>aa</div>
-<div>aa</div>
-<div>aa</div><br>
+    </div><div style="color:white;">aa</div>
+<div style="color:white;">aa</div>
+<div style="color:white;">aa</div>
+<div style="color:white;">aa</div><br>
     <div class="container">
     
 <div class="produto">
-        <img src="../static/hamb2.png" alt="Foto do Prêmio" width="2ox">
+        <img src="../static/betolanches/hamb2.png" alt="Foto do Prêmio" width="2ox">
     <div class="informacoes">
         <h2 id="titulo1">Ki-Lanchão</h2>
 <p>2 Carne Frango, 2 Ovos, Salsicha, Bacon, calabresa, 2 queijo, 2 Presuntos, tomate, milho, ervilha e alface</p>
@@ -374,7 +377,7 @@ function valortotal() {
     </div><div class="container">
     
 <div class="produto">
-        <img src="../static/hamb1.png" alt="Foto do Prêmio" width="2ox">
+        <img src="../static/betolanches/hamb1.png" alt="Foto do Prêmio" width="2ox">
     <div class="informacoes">
         <h2>X-Tudo Especial</h2>
 <p>Carne, Bacon, Calabresa, Frango, Salsicha, Presunto, Queijo, Ovo, Ervilha, Milho,  Pepino, Tomate, Alface</p>
@@ -404,7 +407,7 @@ function valortotal() {
 <div class="container">
     
 <div class="produto">
-        <img src="../static/misto.png" alt="Foto do Prêmio" width="2ox">
+        <img src="../static/betolanches/misto.png" alt="Foto do Prêmio" width="2ox">
     <div class="informacoes">
         <h2>Misto Especial</h2>
 <p>Queijo, Presunto e Ovo</p>
@@ -425,7 +428,7 @@ function valortotal() {
     </div><div class="container">
     
 <div class="produto">
-        <img src="../static/sucoC.png" alt="Foto do Prêmio" width="2ox">
+        <img src="../static/betolanches/sucoC.png" alt="Foto do Prêmio" width="2ox">
     <div class="informacoes">
         <h2>Suco de Cupuaçu</h2>
 <p>Copo de 400mL</p>
@@ -447,7 +450,7 @@ function valortotal() {
     <div class="container">
     
 <div class="produto">
-        <img src="../static/sucoG.png" alt="Foto do Prêmio" width="2ox">
+        <img src="../static/betolanches/sucoG.png" alt="Foto do Prêmio" width="2ox">
     <div class="informacoes">
         <h2>Suco de Goiaba</h2>
 <p>Copo de 400mL</p>
@@ -465,25 +468,28 @@ function valortotal() {
 
     </div></div>
 
-<div>a</div><div>a</div><div>a</div><div>a</div><div>a</div><div>a</div>
+<div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div>
 
 
-<div>a</div>
-
-
+<div style="color:white;">a</div>
 
 
 
 
-    
 
 
     
-<div class="footer"><h3 id="valortotal">Total em dinheiro: R$&nbsp;40,50</h3>
+
+
+    
+<div class="footer"><h3 id="valortotal">Total em dinheiro: R$&nbsp;0,00</h3>
     
     <button id="comprar" onclick="abrirFormulario()">COMPRAR</button>
 </div><style>
-        #formulario-overlay {
+#nome,#endereco{
+font-size:30px;
+}
+#formulario-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -528,6 +534,7 @@ function valortotal() {
             padding: 10px;
             background-color: #FF7300;
             border: none;
+            font-size: 20px;
             color: #fff;
             border-radius: 5px;
             cursor: pointer;
