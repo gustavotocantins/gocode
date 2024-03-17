@@ -162,8 +162,8 @@ function abrirFormulario() {
         function comprar() {
             var nome = document.getElementById("nome").value;
             var endereco = document.getElementById("endereco").value;
-            emoji = encodeURIComponent("🍢");
-            inicio = "https://wa.me/559188627177?text="+emoji+"%20*ESPETARIA%20NATAN%20E%20JUNIOR%3A*%0A";
+            emoji = encodeURIComponent("🍔");
+            inicio = "https://wa.me/559188627177?text="+emoji+"%20*NOVO%PEDIDO%20BURGUER%3A*%0A";
             produtos = manipularProdutos(verificarItensNaoZerados());
             dados = "%0A%F0%9F%93%8C%20*MEUS%20DADOS*%0ANome%3A%20";
             // Construir a mensagem com os dados do pedido e os dados do cliente
@@ -224,11 +224,11 @@ function verificarItensNaoZerados() {
     
     // Definir uma lista de nomes de produtos relacionados aos itens
     var nomesProdutos = {
-        item1: document.getElementById('item1').value+encodeURIComponent("x Produto 1"),
-        item2: document.getElementById('item2').value+encodeURIComponent("x Produto 2"),
-        item3: document.getElementById('item3').value+"x Produto 3",
-        item4:document.getElementById('item4').value+encodeURIComponent("x Produto 4"),
-        item5: document.getElementById('item5').value+"x Produto 5"
+        item1: document.getElementById('item1').value+encodeURIComponent("x Hambúrguer Texana"),
+        item2: document.getElementById('item2').value+encodeURIComponent("x Hambúrguer Americana"),
+        item3: document.getElementById('item3').value+encodeURIComponent("x Hambúrguer Duplo"),
+        item4:document.getElementById('item4').value+encodeURIComponent("x Suco de Cupuaçu"),
+        item5: document.getElementById('item5').value+encodeURIComponent("x Suco de Coiaba")
         // Adicione outros itens conforme necessário
     };
     
