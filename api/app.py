@@ -29,5 +29,9 @@ def natanjunior():
 def natanlink():
     return render_template('natanlink.html')
 
+@app.route('/burguer')
+def burguer():
+    return render_template('exemplo.html')
+
 if __name__ == '__main__':
     app.run()

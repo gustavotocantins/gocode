@@ -1,0 +1,567 @@
+<html lang="pt-BR"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espetaria Natan e Junior | GoCode</title>
+    <style>#comprar{
+background-color: #FF7300;
+width: 70%;
+height: 50px;
+border: none;
+border-radius: 10px;
+color: white;
+font-size: 20px;
+}
+.footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+/* Estilos globais */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cabeçalho */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FF7300;
+    color: #fff;
+    padding: 10px 0;
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-top: 10px; /* Adiciona margem superior para evitar sobreposição com o cabeçalho */
+}
+
+/* Conteúdo */
+.content {
+    flex: 1;
+}
+
+.content h2 {
+    margin-top: 0;
+}
+
+.content p {
+    margin-bottom: 20px;
+}
+
+/* Estilos de quantidade */
+.quantity-container,
+.amount,
+.quantity-input-field,
+.quantity-button {
+    text-align: center;
+}
+
+.quantity-button,
+.increment-button,
+.button.minhacompra,
+#participate-btn {
+    background-color: #FF7300;
+    color: #fff;
+    border: none;
+    padding: 15px 60px;
+    border-radius: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.quantity-button:hover,
+.increment-button:hover {
+    background-color: black;
+}
+
+.quantity-icon {
+    font-size: 25px;
+    color: #000;
+}
+
+.quantity-input-field {
+    width: 100px;
+    color: #000;
+    font-weight: 200;
+    font-size: 20px;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: 5px;
+    margin: 0 10px; /* ajuste conforme necessário */
+    outline: none;
+}
+
+/* Informações do produto */
+.informacoes {
+    flex: 1; /* Ocupa todo o espaço restante */
+}
+
+.informacoes h2,
+.informacoes p,
+.informacoes h3 {
+    margin: 0;
+}
+
+/* Imagem */
+#logo,
+img {
+    width: 30%;
+    height: auto;
+}
+
+#logo {
+    width: 50%;
+}
+
+/* Regras de texto */
+p,
+#rules-text {
+    padding: 5px;
+    margin: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+</style>
+<style type="text/css" id="operaUserStyle"></style>
+<script>   
+    function limparSessionStorage() {
+    sessionStorage.clear();
+}
+
+// Adicionar um ouvinte de evento para o evento "load" da janela
+window.onload = limparSessionStorage;
+    
+function abrirFormulario() {
+            if(valortotal()=='0'){
+                alert("Escolha os lanches que você deseja pressionando '+'")
+        }else{
+            document.getElementById("formulario-overlay").style.display = "flex";}
+        }
+
+        function fecharFormulario() {
+            document.getElementById("formulario-overlay").style.display = "none";
+        }
+
+        function comprar() {
+            var nome = document.getElementById("nome").value;
+            var endereco = document.getElementById("endereco").value;
+            emoji = encodeURIComponent("🍢");
+            inicio = "https://wa.me/559188627177?text="+emoji+"%20*ESPETARIA%20NATAN%20E%20JUNIOR%3A*%0A";
+            produtos = manipularProdutos(verificarItensNaoZerados());
+            dados = "%0A%F0%9F%93%8C%20*MEUS%20DADOS*%0ANome%3A%20";
+            // Construir a mensagem com os dados do pedido e os dados do cliente
+            var mensagem = nome + "\nEndereço: " + endereco+"\n\n✅ *VALOR TOTAL:* R$ "+valortotal()+"\nPIX: 04588776207";
+            var mensagemCodificada = encodeURIComponent(mensagem);
+            var linkWhatsApp = inicio+produtos+dados+mensagemCodificada;
+
+            // Redirecionar para o WhatsApp
+            window.location.href = linkWhatsApp;
+        }
+    </script>
+    <script>function increaseItemCount(numero,id,valor) {
+    let itemCount = document.getElementById(id).value;
+    itemCount = parseFloat(itemCount);
+    numero = parseFloat(numero);
+    itemCount = itemCount + numero;
+    document.getElementById(id).value = itemCount;
+
+    valor = parseFloat(valor)
+    sessionStorage.setItem(id,itemCount*valor);
+}
+
+function decreaseItemCount(numero,id,valor) {
+    let itemCount = document.getElementById(id).value;
+    itemCount = parseFloat(itemCount);
+    numero = parseFloat(numero);
+    if(itemCount>0){
+        itemCount = itemCount - numero;
+        document.getElementById(id).value = itemCount;
+
+        valor = parseFloat(valor);
+        sessionStorage.setItem(id,itemCount*valor);
+}
+}
+function atualizarValor() {
+
+    var h3Element = document.getElementById("valortotal");
+    h3Element.innerText = "Novo Valor: " + sessionStorage.getItem('item1');
+}
+
+  function somarItens() {
+            var total = 0;
+            for (var i = 1; i <= 40; i++) {
+                var valorItem = parseFloat(sessionStorage.getItem('item' + i));
+                if (!isNaN(valorItem)) {
+                    total += valorItem;
+                }
+            }
+            // Exibir o total formatado como valor em dinheiro
+            var totalEmDinheiro = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            var h3Element = document.getElementById("valortotal");
+            h3Element.innerText = "Total em dinheiro: " + totalEmDinheiro;
+        }
+                
+        setInterval(somarItens, 10);
+function verificarItensNaoZerados() {
+    var itensNaoZerados = [];
+    
+    // Definir uma lista de nomes de produtos relacionados aos itens
+    var nomesProdutos = {
+        item1: document.getElementById('item1').value+encodeURIComponent("x Produto 1"),
+        item2: document.getElementById('item2').value+encodeURIComponent("x Produto 2"),
+        item3: document.getElementById('item3').value+"x Produto 3",
+        item4:document.getElementById('item4').value+encodeURIComponent("x Produto 4"),
+        item5: document.getElementById('item5').value+"x Produto 5"
+        // Adicione outros itens conforme necessário
+    };
+    
+    // Percorrer os itens do sessionStorage
+    for (var i = 1; i <= 40; i++) {
+        var valorItem = parseFloat(sessionStorage.getItem('item' + i));
+        if (!isNaN(valorItem) && valorItem !== 0) {
+            // Se o valor do item não for zero, adicioná-lo à lista de itens não zerados
+            itensNaoZerados.push('item' + i);
+        }
+    }
+    
+    // Relacionar os itens não zerados com os nomes dos produtos
+    var produtosRelacionados = itensNaoZerados.map(function(item) {
+        return nomesProdutos[item];
+    });
+    
+    // Retornar a lista de itens não zerados e os nomes dos produtos relacionados
+    return produtosRelacionados;
+}
+
+        
+        function manipularProdutos(produtosEncontrados) {
+    // Filtrar apenas os elementos válidos e converter em uma única string
+    var produtosString = produtosEncontrados.filter(item => item !== undefined).map(item => item.replace(/\s/g, '%20') + '%0A').join('');
+
+    return produtosString;
+}
+function valortotal() {
+            var total = 0;
+            for (var i = 1; i <= 40; i++) {
+                var valorItem = parseFloat(sessionStorage.getItem('item' + i));
+                if (!isNaN(valorItem)) {
+                    total += valorItem;
+                }
+            }
+            // Exibir o total formatado como valor em dinheiro
+            return total
+        }</script>
+
+
+
+</head>
+<body>
+    <header style="background-color:#FF7300">
+        <img src="..\static\exemplo\logo.png" alt="Foto do Prêmio" id="logo">
+    <div id="menu">
+        
+    </div>
+    
+    </header>
+    <div id="formulario-overlay" style="display: none;">
+        <div id="formulario">
+            <h2>Falta pouco para comer seu lanche! Informe:</h2>
+            <input type="text" id="nome" placeholder="Nome" style="fonte-size: 44px;">
+            <input type="text" id="endereco" placeholder="Endereço">
+            <button onclick="comprar()" id="finalizarcompra">Enviar Pedido</button>
+            <div id="formulario-footer">
+                <button onclick="fecharFormulario()" id="finalizarcompra">voltar</button>
+            </div>
+        </div>
+    </div><div style="color:white;">aa</div>
+<div style="color:white;">aa</div>
+<div style="color:white;">aa</div>
+<div style="color:white;">aa</div><br>
+    <div class="container">
+    
+<div class="produto">
+        <img src="..\static\exemplo\hamb2.png" alt="Foto do Prêmio" width="2ox">
+    <div class="informacoes">
+        <h2 id="titulo1">Hambúrguer Texana</h2>
+<p>Carne de boi angus,
+Queijo cheddar defumado,
+Bacon crocante,
+Molho barbecue caseiro,
+Cebolas caramelizadas</p>
+<h3>Valor: R$ 20,00</h3>
+
+        <div class="quantity-container" style="margin-top: 10px; margin-bottom: 0px; text-align: center;">
+    <div class="amount">
+        <div class="form-group quantity-input" style="text-align: center; margin-bottom: 0; display: flex; justify-content: center; align-items: center;">
+            <button class="quantity-button" onclick="decreaseItemCount(1,'item1',20)"><i style="color:white;" class="bi bi-dash-circle quantity-icon"> - </i></button>
+            <input type="number" id="item1" class="quantity-input-field" value="0" min="5" max="6000" onblur="numerosAleatorio();" placeholder="Quantidade de cotas">
+            <button class="quantity-button" onclick="increaseItemCount(1,'item1',20)"><i class="bi bi-plus-circle quantity-icon" style="color:white;">+</i></button>
+        </div>
+    </div>
+</div></div>
+
+    </div>
+    <style>.produto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.informacoes {
+    flex: 1; /* Ocupa todo o espaço restante */
+}
+
+.informacoes h2,
+.informacoes p,
+.informacoes h3 {
+    margin: 0;
+}
+
+.quantity-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity-button {
+    background: #FF7300;
+    color: white;
+    border-radius: 300px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.quantity-icon {
+    font-size: 25px;
+    color: #000;
+}
+
+.quantity-input-field {
+    width: 100px;
+    text-align: center;
+    color: #000000;
+    font-weight: 200;
+    font-size: 20px;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: 5px;
+    margin: 0 10px;
+    outline: none;
+}</style>
+
+
+
+        
+        
+        
+
+     
+    </div><div class="container">
+    
+<div class="produto">
+        <img src="..\static\exemplo\hamb1.png" alt="Foto do Prêmio" width="2ox">
+    <div class="informacoes">
+        <h2>Hambúrguer Americana</h2>
+<p>Carne de boi angus
+Queijo americano
+Bacon
+Alface
+Tomate
+Cebola roxa
+Picles
+Maionese</p>
+<h3>Valor: R$ 17,00</h3>
+
+        <div class="quantity-container" style="margin-top: 10px; margin-bottom: 0px; text-align: center;">
+    <div class="amount">
+        <div class="form-group quantity-input" style="text-align: center; margin-bottom: 0; display: flex; justify-content: center; align-items: center;">
+            <button class="quantity-button" onclick="decreaseItemCount(1,'item2',17)"><i style="color:white;" class="bi bi-dash-circle quantity-icon"> - </i></button>
+            <input type="number" id="item2" class="quantity-input-field" value="0" min="5" max="6000" onblur="numerosAleatorio();" placeholder="Quantidade de cotas">
+            <button class="quantity-button" onclick="increaseItemCount(1,'item2',17)"><i class="bi bi-plus-circle quantity-icon" style="color:white;">+</i></button>
+        </div>
+    </div>
+</div></div>
+
+    </div>
+    
+
+
+
+        
+        
+        
+
+     
+    </div>
+<div class="container">
+    
+<div class="produto">
+        <img src="..\static\exemplo\hamb3.png" alt="Foto do Prêmio" width="2ox">
+    <div class="informacoes">
+        <h2>Hambúrguer Duplo</h2>
+<p>Dois discos de carne de boi angus
+Queijo cheddar
+Bacon
+Alface
+Tomate
+Pão de hambúrguer</p>
+<h3>Valor: R$ 5,00</h3>
+
+        <div class="quantity-container" style="margin-top: 10px; margin-bottom: 0px; text-align: center;">
+    <div class="amount">
+        <div class="form-group quantity-input" style="text-align: center; margin-bottom: 0; display: flex; justify-content: center; align-items: center;">
+            <button class="quantity-button" onclick="decreaseItemCount(1,'item3',5)"><i style="color:white;" class="bi bi-dash-circle quantity-icon"> - </i></button>
+            <input type="number" id="item3" class="quantity-input-field" value="0" min="5" max="6000" onblur="numerosAleatorio();" placeholder="Quantidade de cotas">
+            <button class="quantity-button" onclick="increaseItemCount(1,'item3',5)"><i class="bi bi-plus-circle quantity-icon" style="color:white;">+</i></button>
+        </div>
+    </div>
+</div></div>
+
+    </div>
+     
+    </div><div class="container">
+    
+<div class="produto">
+        <img src="..\static\exemplo\sucoC.png" alt="Foto do Prêmio" width="2ox">
+    <div class="informacoes">
+        <h2>Suco de Cupuaçu</h2>
+<p>Copo de 300mL</p>
+<h3>Valor: R$ 5,00</h3>
+
+        <div class="quantity-container" style="margin-top: 10px; margin-bottom: 0px; text-align: center;">
+    <div class="amount">
+        <div class="form-group quantity-input" style="text-align: center; margin-bottom: 0; display: flex; justify-content: center; align-items: center;">
+            <button class="quantity-button" onclick="decreaseItemCount(1,'item4',5)"><i style="color:white;" class="bi bi-dash-circle quantity-icon"> - </i></button>
+            <input type="number" id="item4" class="quantity-input-field" value="0" min="5" max="6000" onblur="numerosAleatorio();" placeholder="Quantidade de cotas">
+            <button class="quantity-button" onclick="increaseItemCount(1,'item4',5)"><i class="bi bi-plus-circle quantity-icon" style="color:white;">+</i></button>
+        </div>
+    </div>
+</div></div>
+
+    </div>
+     
+    </div>
+    <div class="container">
+    
+<div class="produto">
+        <img src="..\static\exemplo\sucoG.png" alt="Foto do Prêmio" width="2ox">
+    <div class="informacoes">
+        <h2>Suco de Goiaba</h2>
+<p>Copo de 300mL</p>
+<h3>Valor: R$ 5,00</h3>
+
+        <div class="quantity-container" style="margin-top: 10px; margin-bottom: 0px; text-align: center;">
+    <div class="amount">
+        <div class="form-group quantity-input" style="text-align: center; margin-bottom: 0; display: flex; justify-content: center; align-items: center;">
+            <button class="quantity-button" onclick="decreaseItemCount(1,'item5',5)"><i style="color:white;" class="bi bi-dash-circle quantity-icon"> - </i></button>
+            <input type="number" id="item5" class="quantity-input-field" value="0" min="5" max="6000" onblur="numerosAleatorio();" placeholder="Quantidade de cotas">
+            <button class="quantity-button" onclick="increaseItemCount(1,'item5',5)"><i class="bi bi-plus-circle quantity-icon" style="color:white;">+</i></button>
+        </div>
+    </div>
+</div></div>
+
+    </div></div>
+
+<div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div><div style="color:white;">a</div>
+
+
+<div style="color:white;">a</div>
+
+
+
+
+
+
+    
+
+
+    
+<div class="footer"><h3 id="valortotal">Total em dinheiro: R$&nbsp;0,00</h3>
+    
+    <button id="comprar" onclick="abrirFormulario()">Fazer Pedido</button>
+</div><style>
+#nome,#endereco{
+font-size:30px;
+}
+#formulario-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+            z-index: 999; /* Garante que o formulário esteja acima de todos os outros elementos */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #formulario {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos para o cabeçalho do formulário */
+        #formulario h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        /* Estilos para os campos de entrada */
+        #formulario input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Estilos para o botão */
+        #formulario button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FF7300;
+            border: none;
+            font-size: 20px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilos para o rodapé do formulário */
+        #formulario-footer {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+
+</body></html>
