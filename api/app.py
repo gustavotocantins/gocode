@@ -21,7 +21,7 @@ def imprimirPix():
 
 @app.route('/.well-known/pki-validation/<path:filename>')
 def serve_validation_file(filename):
-    return send_from_directory('.well-known/pki-validation', filename)
+    return send_from_directory('.well-known/pki-validation', filename, as_attachment=True)
 
 if __name__ == "__main__":
   #context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
