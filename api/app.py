@@ -100,12 +100,40 @@ def CheckEmail():
     default_app = firebase_admin.initialize_app(cred_obj, {
         'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
         })
+    
     ref = db.reference()
     cursor = ref.child('usuarios')
     for key, checkemail in cursor.get().items():
         if (checkemail.get('email') == data['email']):
             return "E-mail já foi cadastrado!"
     return "Não existe"
+
+@app.route('/infoemail', methods=['POST'])
+def infoemail():
+    data = request.get_json()
+    try:
+        firebase_admin.delete_app(firebase_admin.get_app())
+    except:
+        pass
+    firebase_credentials = os.getenv('CREDENCIAL')
+    cred_dict = json.loads(firebase_credentials)
+    cred_obj = firebase_admin.credentials.Certificate(cred_dict)
+    default_app = firebase_admin.initialize_app(cred_obj, {
+        'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
+        })
+    
+    ref = db.reference()
+    usuarios_ref = ref.child('usuarios')
+
+    # Loop para verificar se o email já está cadastrado
+    for key, user_data in usuarios_ref.get().items():
+        if user_data.get('email') == data['email']:
+            # Se encontrar o email, retornar o nome da pessoa
+            nome = user_data.get('nome', 'Nome não encontrado')
+            return nome
+    else:
+        # Se não encontrar o email, retorna uma mensagem indicando que não existe
+        print("Não existe")
   
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
