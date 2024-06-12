@@ -6,11 +6,6 @@ from firebase_admin import db
 import os
 import json
 
-@app.route("/", methods=["POST"])
-def imprimir():
-  response = {"status": 200}
-  return jsonify(response)
-
 @app.route('/instituicao')
 def print_data():
     try:
@@ -114,4 +109,3 @@ def CheckEmail():
   
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
-
