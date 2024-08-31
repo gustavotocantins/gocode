@@ -1,0 +1,51 @@
+from flask import Flask, jsonify, request
+import firebase_admin
+from firebase_admin import credentials, firestore
+import os
+import json
+
+app = Flask(__name__)
+
+# Carregando as credenciais do Firebase
+with open('/home/gustavo/Downloads/fpi-app-ca719-firebase-adminsdk-smxbt-075b5e54b1.json') as f:
+    firebase_credentials = json.load(f)
+
+# Passando o dicionário diretamente para a função Certificate
+cred_obj = credentials.Certificate(firebase_credentials)
+default_app = firebase_admin.initialize_app(cred_obj, {
+    'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
+})
+
+# Inicializando o Firestore
+db = firestore.client()
+
+def adicionar_professor(professor_id, nome, email, telefone, escola):
+    professor_ref = db.collection('professores').document(professor_id)
+    professor_ref.set({
+        'nome': nome,
+        'email': email,
+        'telefone': telefone,
+        'escola': escola
+    })
+
+def adicionar_aluno(professor_id, aluno_id, nome, idade, turma):
+    aluno_ref = db.collection('professores').document(professor_id).collection('alunos').document(aluno_id)
+    aluno_ref.set({
+        'nome': nome,
+        'idade': idade,
+        'turma': turma
+    })
+
+def adicionar_atividade(professor_id, aluno_id, atividade_id, titulo, data, nota):
+    atividade_ref = db.collection('professores').document(professor_id).collection('alunos').document(aluno_id).collection('atividades').document(atividade_id)
+    atividade_ref.set({
+        'titulo': titulo,
+        'data': data,
+        'nota': nota
+    })
+
+# Exemplo de uso
+adicionar_professor('prof1', 'João Silva', 'joao@example.com', '123456789', 'Escola XYZ')
+adicionar_aluno('prof1', 'aluno1', 'Maria Souza', 14, '8A')
+adicionar_atividade('prof1', 'aluno1', 'atividade1', 'Matemática - Prova 1', '2024-08-30', 8.5)
+

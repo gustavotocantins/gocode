@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials,firestore
 from firebase_admin import db
 import os
 import json
@@ -40,6 +40,7 @@ def CadastrarLogin():
               if (checkemail.get('email') == email):
                   return True
           return False
+      
     data = request.get_json()
     
     try:
@@ -76,20 +77,24 @@ def Login():
     default_app = firebase_admin.initialize_app(cred_obj, {
         'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
         })
-    ref = db.reference()
-    
-    usuarios_ref = ref.child('usuarios')
-    for user_key, usuario in usuarios_ref.get().items():
-        if (usuario.get('email') == data["email"]):
-            if (usuario.get("senha") == data['senha']):
+    db = firestore.client()
+    def consultar_professor(professor_id):
+        professor_ref = db.collection('professores').document(professor_id)
+        doc = professor_ref.get()
+        if doc.exists:
+            senha = doc.to_dict()['senha']
+            if (data['senha'] == senha):
                 return "Login Aceito"
             else:
-                pass
-    return "Senha/Usuário incorretos"
+                return "Senha/Usuário incorretos"
+        else:
+            return "Senha/Usuário incorretos"
+    consultar_professor(data['email'])
 
 @app.route('/CheckEmail', methods=['POST'])
 def CheckEmail():
     data = request.get_json()
+    
     try:
         firebase_admin.delete_app(firebase_admin.get_app())
     except:
