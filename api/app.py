@@ -75,12 +75,12 @@ def CadastrarLogin():
 @app.route('/CadastrarAluno', methods=['POST'])
 def CadastrarAluno():
     data = request.get_json()
-    
+
     try:
         firebase_admin.delete_app(firebase_admin.get_app())
     except:
         pass
-    
+
     firebase_credentials = os.getenv('CREDENCIAL')
     cred_dict = json.loads(firebase_credentials)
     cred_obj = firebase_admin.credentials.Certificate(cred_dict)
@@ -100,9 +100,35 @@ def CadastrarAluno():
         'instituicao': data['instituicao']
     })
     return 'Cadastrado'
+
+@app.route('/ConsultarAlunos', methods=['POST'])
+def ConsultarAlunos():
+    data = request.get_json()
+
+    try:
+        firebase_admin.delete_app(firebase_admin.get_app())
+    except:
+        pass
+
+    firebase_credentials = os.getenv('CREDENCIAL')
+    cred_dict = json.loads(firebase_credentials)
+    cred_obj = firebase_admin.credentials.Certificate(cred_dict)
+    default_app = firebase_admin.initialize_app(cred_obj, {
+        'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
+        })
+
+    # Inicializando o Firestore
+    db = firestore.client()
     
-        
-        
+    def obter_alunos_por_professor(professor_id):
+        # Acessa a coleção de alunos para o professor com o ID fornecido
+        alunos = db.collection('professores').document(professor_id).collection('alunos').stream()
+        alunos_info = []
+        for aluno in alunos:
+            alunos_info.append(aluno.to_dict())
+        return alunos_info if alunos_info else None
+    return obter_alunos_por_professor(data['email'])
+
 @app.route('/Login', methods=['POST'])
 def Login():
     data = request.get_json()
