@@ -104,7 +104,6 @@ def CadastrarAluno():
 @app.route('/ConsultarAlunos', methods=['POST'])
 def ConsultarAlunos():
     data = request.get_json()
-
     try:
         firebase_admin.delete_app(firebase_admin.get_app())
     except:
@@ -126,6 +125,43 @@ def ConsultarAlunos():
     for aluno in alunos:
         alunos_info.append(aluno.to_dict())
     return alunos_info if alunos_info else None
+
+#ADICIONAR AS ATIVIDADES
+@app.route('/AdicionarAtividades', methods=['POST'])
+def AdicionarAtividades():
+    data = request.get_json()
+    try:
+        firebase_admin.delete_app(firebase_admin.get_app())
+    except:
+        pass
+
+    firebase_credentials = os.getenv('CREDENCIAL')
+    cred_dict = json.loads(firebase_credentials)
+    cred_obj = firebase_admin.credentials.Certificate(cred_dict)
+    default_app = firebase_admin.initialize_app(cred_obj, {
+        'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
+        })
+
+    # Inicializando o Firestore
+    db = firestore.client()
+    
+        # Acessa a coleção de alunos para o professor com o ID fornecido
+    atividade_ref = db.collection('professores').document(data['professor_id']).collection('alunos').document(data['aluno_id']).collection('atividades').document(data['atividade_id'])
+    atividade_ref.set({
+        'titulo': data['titulo'],
+        'data': data['data'],
+        'jogo1':data['nota'][0],
+        'jogo2':data['nota'][1],
+        'jogo3':data['nota'][2],
+        'jogo4':data['nota'][3],
+        'jogo5':data['nota'][4],
+        'jogo6':data['nota'][5],
+        'jogo7':data['nota'][6],
+        'jogo8':data['nota'][7],
+        'jogo9':data['nota'][8],
+        'jogo10':data['nota'][9],
+        'observacaoEducador':data['obeservaEducador']
+    })
 
 @app.route('/Login', methods=['POST'])
 def Login():
