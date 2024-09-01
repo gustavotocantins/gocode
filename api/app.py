@@ -34,13 +34,6 @@ def print_data():
 
 @app.route('/CadastrarLogin', methods=['POST'])
 def CadastrarLogin():
-    def VerificarEmailExistente(email):
-          cursor = ref.child('usuarios')
-          for key, checkemail in cursor.get().items():
-              if (checkemail.get('email') == email):
-                  return True
-          return False
-      
     data = request.get_json()
     
     try:
@@ -54,14 +47,29 @@ def CadastrarLogin():
     default_app = firebase_admin.initialize_app(cred_obj, {
         'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
         })
-    ref = db.reference()
-    
-    usuarios_ref = ref.child('usuarios')
 
-    if VerificarEmailExistente(data['email']):
+    # Inicializando o Firestore
+    db = firestore.client()
+    def adicionar_professor(professor_id, nome, email, instituicao, senha):
+        professor_ref = db.collection('professores').document(professor_id)
+        professor_ref.set({
+            'nome': nome,
+            'email': email,
+            'instituicao': instituicao,
+            'senha': senha
+        })
+    def consultar_professor(professor_id):
+        professor_ref = db.collection('professores').document(professor_id)
+        doc = professor_ref.get()
+        if doc.exists:
+            return True
+        else:
+            return False
+    
+    if consultar_professor(data['email']):
         return "E-mail existente"
     else:
-        usuarios_ref.push(data)
+        adicionar_professor(data['email'], data['nome'], data['email'], data['instituicao'], data['senha'])
         return "Cadastrado"
 
 @app.route('/Login', methods=['POST'])
