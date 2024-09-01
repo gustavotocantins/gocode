@@ -86,9 +86,9 @@ def Login():
             if (data['senha'] == senha):
                 return doc.to_dict()
             else:
-                return "Senha/Usuário incorretos"
+                return 'errado'
         else:
-            return "Senha/Usuário incorretos"
+            return 'errado'
         
     return consultar_professor(data['email'])
 @app.route('/CheckEmail', methods=['POST'])
