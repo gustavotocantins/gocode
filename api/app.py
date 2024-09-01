@@ -89,8 +89,8 @@ def Login():
                 return "Senha/Usuário incorretos"
         else:
             return "Senha/Usuário incorretos"
-    consultar_professor(data['email'])
-
+        
+    return consultar_professor(data['email'])
 @app.route('/CheckEmail', methods=['POST'])
 def CheckEmail():
     data = request.get_json()
