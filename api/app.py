@@ -72,6 +72,37 @@ def CadastrarLogin():
         adicionar_professor(data['email'], data['nome'], data['email'], data['instituicao'], data['senha'])
         return "Cadastrado"
 
+@app.route('/CadastrarAluno', methods=['POST'])
+def CadastrarAluno():
+    data = request.get_json()
+    
+    try:
+        firebase_admin.delete_app(firebase_admin.get_app())
+    except:
+        pass
+    
+    firebase_credentials = os.getenv('CREDENCIAL')
+    cred_dict = json.loads(firebase_credentials)
+    cred_obj = firebase_admin.credentials.Certificate(cred_dict)
+    default_app = firebase_admin.initialize_app(cred_obj, {
+        'databaseURL':'https://fpi-app-ca719-default-rtdb.firebaseio.com/'
+        })
+
+    # Inicializando o Firestore
+    db = firestore.client()
+
+    aluno_ref = db.collection('professores').document(data['professor_id']).collection('alunos').document(data['aluno_id'])
+    aluno_ref.set({
+        'nome': data['nome'],
+        'demanda': data['demanda'],
+        'observacoes': data['observacoes'],
+        'serie': data['serie'],
+        'instituicao': data['instituicao']
+    })
+    return 'Cadastrado'
+    
+        
+        
 @app.route('/Login', methods=['POST'])
 def Login():
     data = request.get_json()
