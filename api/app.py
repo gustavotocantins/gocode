@@ -120,14 +120,12 @@ def ConsultarAlunos():
     # Inicializando o Firestore
     db = firestore.client()
     
-    def obter_alunos_por_professor(professor_id):
         # Acessa a coleção de alunos para o professor com o ID fornecido
-        alunos = db.collection('professores').document(professor_id).collection('alunos').stream()
-        alunos_info = []
-        for aluno in alunos:
-            alunos_info.append(aluno.to_dict())
-        return alunos_info if alunos_info else None
-    return obter_alunos_por_professor(data['email'])
+    alunos = db.collection('professores').document(data['email']).collection('alunos').stream()
+    alunos_info = []
+    for aluno in alunos:
+        alunos_info.append(aluno.to_dict())
+    return alunos_info if alunos_info else None
 
 @app.route('/Login', methods=['POST'])
 def Login():
