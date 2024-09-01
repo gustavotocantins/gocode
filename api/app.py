@@ -162,6 +162,7 @@ def AdicionarAtividades():
         'jogo10':data['nota'][9],
         'observacaoEducador':data['obeservaEducador']
     })
+    return '202'
 
 @app.route('/Login', methods=['POST'])
 def Login():
