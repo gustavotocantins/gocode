@@ -84,7 +84,7 @@ def Login():
         if doc.exists:
             senha = doc.to_dict()['senha']
             if (data['senha'] == senha):
-                return "Login Aceito"
+                return doc.to_dict()
             else:
                 return "Senha/Usuário incorretos"
         else:
