@@ -154,12 +154,7 @@ def AdicionarAtividades():
         'BateriaTatil':data['nota'][1],
         'BateriaEspacial':data['nota'][2],
         'BateriaAuditiva':data['nota'][3],
-        'jogo5':data['nota'][4],
-        'jogo6':data['nota'][5],
-        'jogo7':data['nota'][6],
-        'jogo8':data['nota'][7],
-        'jogo9':data['nota'][8],
-        'jogo10':data['nota'][9],
+        'BateriaOlfato':data['nota'][4],
         'observacaoEducador':data['obeservaEducador']
     })
     return '202'
