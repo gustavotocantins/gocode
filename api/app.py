@@ -1,11 +1,10 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,render_template
 app = Flask(__name__)
 import firebase_admin
 from firebase_admin import credentials,firestore
 from firebase_admin import db
 import os
 import json
-
 @app.route('/instituicao')
 def print_data():
     try:
@@ -234,6 +233,10 @@ def infoemail():
     else:
         # Se não encontrar o email, retorna uma mensagem indicando que não existe
         print("Não existe")
-  
+
+@app.route('/Burguer24horas', methods=['POST'])
+def lanches():
+    return render_template('exemplo.html')
+
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
