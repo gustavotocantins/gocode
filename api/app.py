@@ -234,7 +234,7 @@ def infoemail():
         # Se não encontrar o email, retorna uma mensagem indicando que não existe
         print("Não existe")
 
-@app.route('/Burguer24horas', methods=['POST'])
+@app.route('/Burguer24horas', methods=['GET'])
 def lanches():
     return render_template('exemplo.html')
 
