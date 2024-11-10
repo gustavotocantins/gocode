@@ -238,5 +238,9 @@ def infoemail():
 def lanches():
     return render_template('exemplo.html')
 
+@app.route('/calman', methods=['GET'])
+def caman():
+    return render_template('caman.html')
+
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
