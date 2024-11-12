@@ -14,15 +14,15 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      background-color: black;
+      background-color: #F6F1F1FF;
     }
 
     .carousel-container {
       max-width: 600px;
-      width: 100%;
+      width: 90%;
       position: relative;
       overflow: hidden;
-      border-radius: 10px;
+      border-radius: 20px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
@@ -63,7 +63,7 @@
 <body>
 
   <div class="carousel-container">
-    <div class="carousel-images" style="transform: translateX(-400%);">
+    <div class="carousel-images" style="transform: translateX(-100%);">
       <img src="../static/anuncio1.png" alt="Imagem 1">
       <img src="../static/anuncio2.png" alt="Imagem 2">
       
@@ -98,6 +98,7 @@
     // Muda automaticamente a cada 3 segundos
     setInterval(nextImage, 3000);
   </script>
+
 
 
 
