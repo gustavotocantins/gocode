@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<html lang="pt-br"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrossel de Imagens</title>
@@ -65,16 +63,16 @@
 <body>
 
   <div class="carousel-container">
-    <div class="carousel-images">
-      <img src="../static/topoMENU.png" alt="Imagem 1">
-      <img src="../static/topoMENU.png" alt="Imagem 2">
-      <img src="../static/topoMENU.png" alt="Imagem 3">
-      <img src="../static/topoMENU.png" alt="Imagem 4">
-      <img src="../static/topoMENU.png" alt="Imagem 5">
+    <div class="carousel-images" style="transform: translateX(-400%);">
+      <img src="../static/anuncio1.png" alt="Imagem 1">
+      <img src="../static/anuncio2.png" alt="Imagem 2">
+      
+      
+      
     </div>
     <div class="carousel-buttons">
-      <button class="carousel-button" onclick="previousImage()">&#10094;</button>
-      <button class="carousel-button" onclick="nextImage()">&#10095;</button>
+      <button class="carousel-button" onclick="previousImage()">❮</button>
+      <button class="carousel-button" onclick="nextImage()">❯</button>
     </div>
   </div>
 
@@ -101,6 +99,7 @@
     setInterval(nextImage, 3000);
   </script>
 
-</body>
-</html>
 
+
+
+</body></html>
