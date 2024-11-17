@@ -64,8 +64,8 @@
 
   <div class="carousel-container">
     <div class="carousel-images" style="transform: translateX(-100%);">
-      <img src="../static/anuncio1.png" alt="Imagem 1">
-      <img src="../static/anuncio2.png" alt="Imagem 2">
+      <img src="../static/anuncio1.png" id="openLink" alt="Imagem 1">
+      <img src="../static/anuncio2.png" id="openLink2" alt="Imagem 2">
       
       
       
@@ -80,6 +80,9 @@
     let currentIndex = 0;
     const images = document.querySelector('.carousel-images');
     const totalImages = images.children.length;
+    document.getElementById('openLink').addEventListener('click', function() {
+      AppInventor.setWebViewString("https://www.google.com/");
+    });
 
     function updateCarousel() {
       images.style.transform = `translateX(-${currentIndex * 100}%)`;
